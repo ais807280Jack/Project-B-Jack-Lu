@@ -1,0 +1,106 @@
+<html>
+<head>
+<title> Tap Tap Revenge </title>
+
+<script type="text/javascript" src="script/soundmanager2.js"></script>
+<script type="text/javascript" src="script/loadsoundchrome.js"></script>
+
+    <script src="script/processing-1.4.1.js"></script>
+    <script type="text/processing" data-processing-target="mycanvas">
+
+    /*@pjs globalKeyEvents = "true"; */
+    
+PImage startButton;
+PImage sScreen[] = new PImage[20];
+int n;
+int t;
+int time;
+
+void setup()
+{
+
+    size(400,500);
+    frameRate( 30 );
+    
+	startButton = loadImage("Images/Start_Button.png");
+	
+    n = 1;
+    while (n <= 20)
+    {
+        sScreen[n] = loadImage ("Images/SS"+ n +".jpg");
+        n = n + 1;
+    }
+    
+    time = 0;
+    t = 0;
+
+}
+
+
+void draw()
+{
+    time = time + 1;
+    
+    n = 1;
+	t = 1;
+	
+	while(n < 21)
+	{
+	
+		if(t <= time && time <= t+5)
+		{
+			image(sScreen[n],0,0);	
+		}
+		
+		t = t + 5;
+		n = n + 1;
+		
+		
+		if(time > 99)
+		{
+			time = 0;
+			time = time + 1;
+			
+			n = 1;
+			t = 1;		
+		}	
+	}
+
+
+// Instructions
+	 text("Instructions",90,430);
+	  if(mousePressed == true && mouseButton == LEFT)
+	  
+	{    
+    	if (mouseX > 80 && mouseX < 130 && mouseY >410 && mouseY <435)
+    	{	
+			link("Instructions5.html");
+		}
+	}     	
+
+//Start Button
+    if(mouseX > 80 && mouseX < 100 && mouseY > 420 && mouseY < 440)
+    {
+        rect(30,300,50,150);
+    }
+
+//Redirect on Click
+    if(mousePressed == true && mouseButton == LEFT)
+    {
+        if(mouseX > 160 && mouseX < 200 && mouseY > 420 && mouseY < 480)
+        {
+            link("Song Page.html");
+        }
+    }
+}
+
+
+</script>
+<canvas id="mycanvas"></canvas>
+
+</head>
+
+<body>
+
+</body>
+</html>

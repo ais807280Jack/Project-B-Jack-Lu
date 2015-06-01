@@ -1,0 +1,157 @@
+<html>
+<head>
+<title> Select Songs </title>
+
+<script type="text/javascript" src="script/soundmanager2.js"></script>
+<script type="text/javascript" src="script/loadsoundchrome.js"></script>
+
+    <script src="script/processing-1.4.1.js"></script>
+    <script type="text/processing" data-processing-target="mycanvas">
+
+    /*@pjs globalKeyEvents = "true"; */
+    
+PImage background;
+PImage menuButton;
+PImage minions;
+PImage more;
+PImage bMinions[] = new PImage[8];
+PImage bMore[] = new PImage[8];
+
+int n;
+int m;
+int time;
+
+void setup()
+{
+
+    size(400,500);
+    frameRate( 30 );
+    
+	background = loadImage("Images/Song Screen.jpg");
+	menuButton = loadImage("Images/Menu_Button.png");
+	minions = loadImage("Images/Minions_Minions_Button.jpg");
+	more = loadImage("Images/More_Comin_Button.jpg");
+
+    n = 2;
+    while (n <= 8)
+    {
+        bMinions[n] = loadImage ("Images/Minions_Minions_Button"+ n +".jpg");
+        n = n + 1;
+    }
+    
+    m = 2;
+    while (m <= 8)
+    {
+        bMore[m] = loadImage ("Images/More_Comin_Button"+ m +".jpg");
+        m = m + 1;
+    }
+    
+    time = 0;
+
+}
+
+
+void draw()
+{
+    image(background,0,0);
+    image(minions,0,134);
+    image(more,0,241);
+    
+//Minions Minions Song
+
+    if(mouseX > 0 && mouseX < 400 && mouseY > 132 && mouseY < 209)
+    {
+        time = time + 1;
+        
+        n = 2;
+        t = 1;
+    
+        while(n < 8)
+        {
+    
+            if(t <= time && time <= t+1)
+            {
+                image(bMinions[n],0,134);	
+            }
+        
+            t = t + 1;
+            n = n + 1;
+        
+        
+            if(time > 8)
+            {
+                time = 0;
+                time = time + 1;
+            
+                n = 2;
+                t = 1;		
+            }	
+        }
+    }
+    
+    if(mousePressed == true && mouseButton == LEFT)
+    {
+        if(mouseX > 0 && mouseX < 400 && mouseY > 130 && mouseY < 207)
+        {
+            link("Game Page.html");
+        }
+    }
+
+
+//More Coming Soon!
+    if(mouseX > 0 && mouseX < 400 && mouseY > 239 && mouseY < 320)
+    {
+        time = time + 1;
+        
+        m = 2;
+        t = 1;
+    
+        while(m < 8)
+        {
+    
+            if(t <= time && time <= t+1)
+            {
+                image(bMore[m],0,241);	
+            }
+        
+            t = t + 1;
+            m = m + 1;
+        
+        
+            if(time > 8)
+            {
+                time = 0;
+                time = time + 1;
+            
+                m = 2;
+                t = 1;		
+            }	
+        }
+    }
+
+
+//Return to Menu Button
+    if(mouseX > 150 && mouseX < 245 && mouseY > 365 && mouseY < 457)
+    {
+        image(menuButton,154,368);
+    }
+    
+    if(mousePressed == true && mouseButton == LEFT)
+    {
+        if(mouseX > 150 && mouseX < 245 && mouseY > 365 && mouseY < 457)
+        {
+            link("index.html");
+        }
+    }
+}
+
+
+</script>
+<canvas id="mycanvas"></canvas>
+
+</head>
+
+<body>
+
+</body>
+</html>

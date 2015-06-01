@@ -1,0 +1,110 @@
+<html>
+<head>
+<title> Instructions </title>
+
+<script type="text/javascript" src="script/soundmanager2.js"></script>
+<script type="text/javascript" src="script/loadsoundchrome.js"></script>
+
+    <script src="script/processing-1.4.1.js"></script>
+    <script type="text/processing" data-processing-target="mycanvas">
+
+    /*@pjs globalKeyEvents = "true"; */
+    
+PImage startButton;
+PImage sScreen[] = new PImage[20];  
+int n;
+int t;
+int time;
+
+    void setup()
+{
+
+    size(400,500);
+    frameRate( 30 );
+    background(100,200,100);
+    
+    startButton = loadImage("Images/Start_Button.png");
+     n = 1;
+    while (n <= 1000)
+    {
+        sScreen[n] = loadImage ("SPACE.jpg");
+        n = n + 1;
+    }
+    
+    time = 0;
+    t = 0;
+    
+    
+    
+    
+    
+}
+
+
+	void draw()
+  {  
+    time = time + 1;
+    
+    n = 1;
+	t = 1;
+	
+	while(n < 21)
+	{
+	
+		if(t <= time && time <= t+5)
+		{
+			image(sScreen[n],0,0);	
+		}
+		
+		t = t + 5;
+		n = n + 1;
+		
+		
+		if(time > 99)
+		{
+			time = 0;
+			time = time + 1;
+			
+			n = 1;
+			t = 1;		
+		}
+	}	
+   
+   { 
+    fill(255,255,255);
+    text("  Instructions ",160,50);
+    text(" * Use numbers 1-2-3 to tap ",70,100);
+    text(" * Try to get as many points ",70,150);
+    text(" * Scoreboard is on top right ",70,200);
+    }
+    
+    
+    //Start Button
+    if(mouseX > 80 && mouseX < 100 && mouseY > 420 && mouseY < 440)
+    {
+        image(startButton,165,384);
+    }
+
+//Redirect on Click
+    if(mousePressed == true && mouseButton == LEFT)
+    {
+        if(mouseX > 130 && mouseX < 180 && mouseY > 350 && mouseY < 410)
+        {
+            link("Song Page.html");
+        }
+    }
+
+}
+    
+    
+    
+    
+    </script>
+<canvas id="mycanvas"></canvas>
+
+</head>
+
+<body>
+
+</body>
+</html>

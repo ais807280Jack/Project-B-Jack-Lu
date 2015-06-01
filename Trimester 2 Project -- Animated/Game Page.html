@@ -1,0 +1,340 @@
+<html>
+<head>
+<title> Minions Minions </title>
+
+<script type="text/javascript" src="script/soundmanager2.js"></script>
+<script type="text/javascript" src="script/loadsoundchrome.js"></script>
+
+    <script src="script/processing-1.4.1.js"></script>
+    <script type="text/processing" data-processing-target="mycanvas">
+
+    /*@pjs globalKeyEvents = "true"; */
+    
+PImage background;
+PImage missed;
+
+//taps
+PImage tap[] = new PImage[3];
+int m;
+
+//taps positions X
+int tapX[] = new int[3];
+int n;
+
+//tap positions Y
+int tapY[] = new int[3];
+int o;
+
+//distance between taps and "tap space"
+int dTap[] = new int[3];
+int p;
+
+int time;
+int addScore;
+int score;
+
+void setup()
+{
+
+    size(400,500);
+    frameRate( 30 );
+    
+    background = loadImage("Images/Minions-2.jpg");
+	missed = loadImage("Images/Missed.png");
+
+	n = 1;
+	while(m <= 3)
+	{
+        tap[n] = loadImage("Images/tap"+n+".png");
+        m = m + 1;
+	}
+
+	t1x = 100;
+	t1y = -30;
+	t2x = 200;
+	t2y = -30;
+	t3x = 300;
+	t3y = -30;
+	
+	d1 = 0;
+	d2 = 0;
+	d3 = 0;
+    
+    tap1 = 2;
+    tap2 = 2;
+    tap3 = 2;
+	
+	time = 1;
+	score = 0;
+    sound = 1;
+    addScore = 0;
+	
+
+}
+
+
+void draw()
+{
+    image(background,0,0);
+    
+    if(sound == 1)
+    {
+        soundManager.play('s0');
+        sound = 0;
+    }
+    
+    if(time > 0)
+    {
+        time = time + 1;
+    }
+        
+        fill(255,255,255);
+    
+//Distance
+    d1 = (int)sqrt(sq(100-t1x)+sq(500-t1y));
+    d2 = (int)sqrt(sq(200-t2x)+sq(500-t2y));
+    d3 = (int)sqrt(sq(300-t3x)+sq(500-t3y));
+
+
+//Tap initial Drops (time)
+    if(time == 130)
+    {
+        tap1 = 0;
+    }
+
+	if(time == 70)
+    {
+        tap2 = 0;
+    }
+
+	if(time == 190)
+    {
+        tap3 = 0;
+    }
+
+
+//Taps
+	if(tap1 == 0)
+	{
+		fill(72,125,249);
+		ellipse(t1x,t1y,30,30);
+		t1y = t1y + 7;
+	}
+
+	if(tap2 == 0)
+	{
+		fill(72,125,249);
+		ellipse(t2x,t2y,30,30);
+		t2y = t2y + 7;
+	}
+
+	if(tap3 == 0)
+	{
+		fill(72,125,249);
+		ellipse(t3x,t3y,30,30);
+		t3y = t3y + 7;
+	}
+
+
+//Missed
+    if(d1 < 25 && d1 > 10)
+	{
+        image(missed,60,370);
+	}
+	
+    if(d2 < 25 && d2 > 10)
+	{
+        image(missed,160,370);
+	}
+
+    if(d3 < 25 && d3 > 10)
+	{
+        image(missed,260,370);
+	}
+
+//Missed then reappears
+    if(d1 < 5)
+    {
+        tap1 = 1;
+    }
+    
+    if(d2 < 5)
+    {
+        tap2 = 1;
+    }
+    
+    if(d3 < 5)
+    {
+        tap3 = 1;
+    }
+
+
+//Background lights
+    fill(204,0,102);
+    noStroke();
+    ellipse(100,450,50,50);
+    
+    fill(204,0,102);
+    noStroke();
+    ellipse(200,450,50,50);
+
+    fill(204,0,102);
+    noStroke();
+    ellipse(300,450,50,50);
+
+
+//Pressing keys to turn lights on & make taps gone
+    if(keyPressed == true)
+    {
+        if(key == '1')
+        {
+			fill(255,255,0);
+			ellipse(100,450,51,51);
+            
+            //hit then reappears
+            if(d1 > 25 && d1 < 30)
+            {
+                tap1 = 1;
+                addScore = 1;
+                
+   
+            }
+        }
+			        
+        if(key == '2')
+        {
+			fill(255,255,0);
+			ellipse(200,450,51,51);
+			
+			if(d2 > 25 && d2 < 30)
+            {
+                tap2 = 1;
+                addScore = 1;
+            
+            }
+
+        }
+        
+        if(key == '3')
+        {
+			fill(255,255,0);
+			ellipse(300,450,51,51);
+			
+			if(d3 > 25 && d3 < 30)
+            {
+                tap3 = 1;
+                addScore = 1;
+            }
+        }
+    }
+    
+//Score Keeping
+    if(addScore == 1)
+    {
+        score = score + 100;
+        addScore = 0;
+    }
+    
+    fill(255,255,255);
+    textSize(20);
+    text("Score: "+score,280,30);
+
+//"Come-backs" taps continue throughout the whole song
+    if(tap1 == 1)
+    {
+        tap1 = 2;
+    }
+
+        //1x (time == 0)                               2x (time == 500)                           3x (time == 800)
+    if(tap1 == 2)
+    {
+        if(time == 250 || time == 350 || time == 450 || time == 550 || time == 650 || time == 750 || time == 850 || time == 950 || time == 1050 || time == 1150)
+        {
+            t1y = -30;
+            tap1 = 0;
+        }
+    }
+        
+    if(tap2 == 1)
+    {
+        tap2 = 2;
+    }
+    
+    if(tap2 == 2)
+    {
+        if(time == 360 || time == 460 || time == 560 || time == 640 || time == 720 || time == 800 || time == 880 || time == 960 || time == 1040 || time == 1120)
+        {
+            t2y = -30;
+            tap2 = 0;
+        }
+    }
+        
+    if(tap3 == 1)
+    {
+        tap3 = 2;
+    }
+    
+    if(tap3 == 2)
+    {
+        if(time == 310 || time == 410 || time == 510 || time == 600 || time == 690 || time == 780 || time == 860 || time == 940 || time == 1020 || time == 1100 || time == 1180)
+        {
+            t3y = -30;
+            tap3 = 0;
+        }
+    }
+
+
+//Ending Pages
+    if(time > 1200)
+    {
+        if(score == 0)
+        {
+            link("You Suck.html");
+        }
+        
+        if(score > 0 && score < 5000)
+        {
+            link("Try Harder.html");
+        }
+
+        if(score > 5000 && score < 9000)
+        {
+            link("Great Job.html");
+        }
+
+        if(score > 9000)
+        {
+            link("Perfection.html");
+        }
+    }
+
+//Indicators of Speed-Changes
+    if(time > 500 && time < 510)
+    {
+        textSize(180);
+        fill(255,0,0);
+        text("2x",110,300);
+    }
+    
+    if(time > 800 && time < 810)
+    {
+        textSize(180);
+        fill(102,255,255);
+        text("3x",110,300);
+    }
+    
+    //Plans game out using google sites. Google sites clearly illustrates what the goal or purpose of the game is, how it will be played. A sufficient level of detail is described such as winning conditions or losing conditions. Lucidcharts is used to create flowchart depicting a transitional map of how the game will flow. The flowchart is intuitive and makes logical sense
+}
+
+
+
+
+</script>
+<canvas id="mycanvas"></canvas>
+
+</head>
+
+<body>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<html>
+<head>
+<title> #%@$*@*! </title>
+
+<script type="text/javascript" src="script/soundmanager2.js"></script>
+<script type="text/javascript" src="script/loadsoundchrome.js"></script>
+
+    <script src="script/processing-1.4.1.js"></script>
+    <script type="text/processing" data-processing-target="mycanvas">
+
+    /*@pjs globalKeyEvents = "true"; */
+    
+PImage youSuck;
+PImage menuButton;
+PImage replayButton;
+
+void setup()
+{
+
+    size(400,500);
+    frameRate( 30 );
+    
+	youSuck = loadImage("Images/You Suck.jpg");
+	menuButton = loadImage("Images/Menu_Button.png");
+	replayButton = loadImage("Images/Restart_Button.png");
+}
+
+
+void draw()
+{
+    image(youSuck,0,0);
+    
+    if(mouseX > 60 && mouseX < 155 && mouseY > 338 && mouseY < 432)
+    {
+        image(menuButton,62,340);
+    }
+    
+    if(mousePressed == true && mouseButton == LEFT)
+    {
+        if(mouseX > 60 && mouseX < 155 && mouseY > 338 && mouseY < 432)
+        {
+            link("index.html");
+        }
+    }
+
+
+    if(mouseX > 245 && mouseX < 338 && mouseY > 338 && mouseY < 432)
+    {
+        image(replayButton,247,340);
+    }
+    
+    if(mousePressed == true && mouseButton == LEFT)
+    {
+        if(mouseX > 245 && mouseX < 338 && mouseY > 338 && mouseY < 432)
+        {
+            link("Game Page.html");
+        }
+    }
+}
+
+
+</script>
+<canvas id="mycanvas"></canvas>
+
+</head>
+
+<body>
+
+</body>
+</html>
